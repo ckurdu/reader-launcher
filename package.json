@@ -1,0 +1,11 @@
+{
+  "name":"@ckurdu/reader-launcher",
+  "version":"1.0.0",
+  "type":"module",
+  "description":"Course reader launcher, asset synchronization, and authenticated GitHub release downloads",
+  "exports":"./index.mjs",
+  "bin":{"reader-launcher":"./cli.mjs"},
+  "files":["index.mjs","cli.mjs","download.mjs","README.md"],
+  "scripts":{"test":"node --test"},
+  "engines":{"node":">=24 <25"}
+}
