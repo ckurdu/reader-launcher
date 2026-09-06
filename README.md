@@ -33,3 +33,9 @@ GitHub's workflow page; an authorized maintainer selects a version and runs it.
 
 The app's browser code is necessarily delivered to authenticated readers. Private GitHub
 hosting is not a mechanism for hiding JavaScript that runs in their browsers.
+
+## Database storage
+
+When the environment sets `DATABASE_URL` (MySQL), `start` passes a MySQL-backed
+store to the app; otherwise it keeps the JSON file store. Create one database per
+website and keep credentials in hosting environment variables only.

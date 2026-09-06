@@ -8,7 +8,13 @@ export async function loadConfig(root = process.cwd()) {
 export async function start(root = process.cwd()) {
   const { createApp } = await import('@ckurdu/course-reader');
   const config = await loadConfig(root);
-  const app = createApp({config,siteDirectory:path.join(root,'protected-site')});
+  let store;
+  if (process.env.DATABASE_URL) {
+    const { MySqlReaderStore } = await import('@ckurdu/course-reader/mysql-store');
+    store = new MySqlReaderStore(process.env.DATABASE_URL);
+    console.log('Using MySQL reader store');
+  }
+  const app = createApp({config,siteDirectory:path.join(root,'protected-site'),...(store ? {store} : {})});
   const port=Number(process.env.PORT || 3000), host=process.env.HOST || '0.0.0.0';
   const server=app.listen(port,host,()=>console.log(`${config.title} listening on ${host}:${port}`));
   for(const signal of ['SIGTERM','SIGINT']) process.once(signal,()=>server.close(error=>process.exit(error?1:0)));
